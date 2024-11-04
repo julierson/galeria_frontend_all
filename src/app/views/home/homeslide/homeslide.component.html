@@ -1,0 +1,16 @@
+<carousel [interval]="myInterval">
+    <slide *ngFor="let slide of slides; let index=index">
+      <img [src]="slide.image" alt="image slide" style="display: block; width: 100%;">
+       
+      <div class="carousel-caption d-none d-md-block" *ngIf="index == 1">
+        <h3>Planejamento financeiro semanal</h3>
+        <p>É muito mais fácil manter o controle financeiro quando temos metas e objetivos tangíveis.</p>
+      </div>
+
+      <div class="carousel-caption d-none d-md-block" *ngIf="index == 2">
+        <h2 class="h3-home-3">Solução Tecnológica</h2>
+        <p>Tem como objetivo buscar inovações e agilidade no processo financeiros.</p>
+      </div>
+
+    </slide>
+</carousel>

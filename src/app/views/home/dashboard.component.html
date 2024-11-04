@@ -1,0 +1,22 @@
+
+<app-grafico
+*ngIf="(isAcaoAcessoEmprestimo == true || isAcaoAcessoVenda == true || isAcaoAcessoDespesa == true) && isAcaoAcessoMenuIndicadores == true" 
+></app-grafico>
+
+<div class="animated fadeIn"
+*ngIf="isAcaoAcessoEmprestimo == false && isAcaoAcessoVenda == false && isAcaoAcessoDespesa == false || isAcaoAcessoMenuIndicadores == false"
+>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header fundo">
+                    <i class="fas fa-home"></i> <strong>Home</strong>
+                </div>
+                <div class="card-body">
+
+                    <app-homeslide></app-homeslide>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

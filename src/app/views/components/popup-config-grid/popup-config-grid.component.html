@@ -1,0 +1,52 @@
+<div bsModal #modalPopUp="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title"><i class="fas fa-tools"></i> {{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="fechar()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+      
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="form-group">
+                  <label for="name">Colunas</label>
+                  <fieldset class="form-group">
+                    <ng-select
+                      class="bootstrap"
+                      placeholder="Selecione colunas"
+                      [options]="varColunas"
+                      [multiple]="true"
+                      [(ngModel)]="varSelectedColunas">
+                    </ng-select>
+                  </fieldset>
+              </div>
+          </div>
+        </div><!--/.row-->
+
+        <div class="row">
+          <div class="col-sm-6 col-lg-6">
+            <div class="form-group">
+              <label for="name">Qtde de registro por pagina</label>
+              <input type="number" autocomplete="off" class="form-control" placeholder="numero"
+              name="varCpf" [(ngModel)]="varNumRegistroPorPagina">
+            </div>
+          </div>
+        </div><!--/.row-->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sms btn-brand" style="margin-bottom: 4px" on-click="salvar()"> 
+          <i class="far fa-save"></i><span>Salvar</span>
+        </button>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

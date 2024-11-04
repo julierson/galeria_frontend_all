@@ -1,0 +1,458 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12 col-lg-10">
+            <div class="card">
+                <div class="card-header fundo">
+                    <i class="fas fa-chart-line"></i> <strong>Indicadores</strong>
+                </div>
+                <div class="card-body">
+
+                    <!--(Chart) Grafico-->
+                    <div class="row"  *ngIf="isAcaoAcessoEmprestimoDetalhado == true || isAcaoAcessoVenda == true || isAcaoAcessoDespesa == true">
+                        <div class="col-sm-10 col-xl-10 col-lg-10">
+                            <div class="card mb-6">
+                                <div class="card-header">
+
+                                    <div class="row">
+                                        <div class="col-auto mr-auto">
+                                            <div class="btn-group" dropdown  placement="top">
+                                                <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                                                {{varTituloDropdownToggle}} <span class="caret"></span></button>
+                                               
+                                                <ul *dropdownMenu class="dropdown-menu" role="menu" >
+                                                    <li role="menuitem" *ngIf="isAcaoAcessoEmprestimoDetalhado == true">
+                                                        <a class="dropdown-item fa-setaEmpresa" on-click="setaTituloDropdownToggle('Emprestimos', '1')" >Empréstimo</a>
+                                                    </li>
+                                                    <li role="menuitem"  *ngIf="isAcaoAcessoVenda == true">
+                                                        <a class="dropdown-item fa-setaEmpresa" on-click="setaTituloDropdownToggle('Vendas', '2')" >Vendas</a>
+                                                    </li>
+                                                    <li role="menuitem" *ngIf="isAcaoAcessoDespesa == true">
+                                                        <a class="dropdown-item fa-setaEmpresa" on-click="setaTituloDropdownToggle('Despesa', '3')" >Despesas</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div><!--/.col-->
+
+                                        <div class="col-auto" *ngIf="varTipoGrafico == 1 && (isAcaoAcessoEmprestimoDetalhado == true)">
+                                            
+                                            <div class="btn-group btn-group-toggle float-left mr-1" data-toggle="buttons">
+                                                <label class="btn btn-outline-primary fa-cursor"  [(ngModel)]="varOpcao" 
+                                                btnRadio="Day" id="option1" on-click="setDadosGraficoEmprestimo('1')">Hoje</label>
+                                                <label class="btn btn-outline-primary fa-cursor"  [(ngModel)]="varOpcao" 
+                                                btnRadio="Month" id="option2" on-click="setDadosGraficoEmprestimo('2')">Mês</label>             
+                                            </div>
+                                            <div class="float-left mr-1" data-toggle="buttons">
+                                                <i class="fas fa-eye btn btn-outline-btnExibe-a" on-click="exibeDetalheEmprestimo(1)" 
+                                                *ngIf="isExibeDetalhesEmprestimo == 2"></i>
+                                                
+                                                <i class="fas fa-eye-slash btn btn-outline-btnExibe-b" on-click="exibeDetalheEmprestimo(2)" 
+                                                *ngIf="isExibeDetalhesEmprestimo == 1"></i>
+                                            </div>
+
+                                            <div class="float-left" data-toggle="buttons" title="Sincronizar Dados" >
+                                                <i class="fas fa-sync btn-reflesh" on-click="sincronizarDados()"></i> 
+                                            </div>
+                                        </div><!--/.col-->
+                                    </div>
+                                </div>
+
+                                 <!--(Chart) Grafico Emprestimo-->
+                                <div *ngIf="varTipoGrafico == 1 && (isAcaoAcessoEmprestimoDetalhado == true)">
+                                    <div class="card-body d-none d-sm-block">
+                                        <canvas  baseChart 
+                                        [datasets]="barChartData"
+                                        [labels]="barChartLabels" 
+                                        [options]="barChartOptions" 
+                                        [legend]="barChartLegend" 
+                                        [chartType]="barChartType" 
+                                        (chartHover)="chartHovered($event)" 
+                                        (chartClick)="chartClicked($event)"
+                                        >
+                                        </canvas>
+                                    </div>
+
+                                    <div class="card-footer" *ngIf="varOpcaoGrafico == 1 
+                                    && (isAcaoAcessoEmprestimoDetalhado == true) 
+                                    && isExibeDetalhesEmprestimo == 2">
+                                        <div class="row text-center">
+                                        
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                            <div class="text-muted">Capital à receber</div>
+                                            <strong>{{varValorCapital | VALOR}}</strong>
+                                            <div class="progress progress-xs mt-2">
+                                                <div class="progress-bar color-valor-capital" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                            <div class="text-muted">Juros à receber</div>
+                                            <strong>{{varValorJuros | VALOR}}</strong>
+                                            <div class="progress progress-xs mt-2">
+                                                <div class="progress-bar color-valor-juros" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Juros por Atraso</div>
+                                                <strong>{{varValorJurosAtrasado | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-juros-atraso" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Total à receber</div>
+                                                <strong>{{varValorTotal | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-total" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                            <div class="text-muted">Atrasado</div>
+                                            <strong>{{varValorAtrasado | VALOR}}</strong>
+                                            <div class="progress progress-xs mt-2">
+                                                <div class="progress-bar color-valor-receber" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Investido</div>
+                                                <strong>{{varValorInvestido | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-juros-atraso" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                            <div class="text-muted">Recebido</div>
+                                            <strong>{{varValorRecebidonomes | VALOR}}</strong>
+                                            <div class="progress progress-xs mt-2">
+                                                <div class="progress-bar color-valor-recebidonomes" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer" *ngIf="varOpcaoGrafico == 2 
+                                    && (isAcaoAcessoEmprestimoDetalhado == true)
+                                    && isExibeDetalhesEmprestimo == 2">
+                                        <div class="row text-center">
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Capital investido</div>
+                                                <strong>{{varValorCapitalInvestido | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-juros-atraso" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Capital recebido</div>
+                                                <strong>{{varValorCapitalTotal | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-capital" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Juros recebido</div>
+                                                <strong>{{varValorJurosTotal | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-juros" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Total recebido</div>
+                                                <strong>{{varValorTotalGeral | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-total" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Atrasado</div>
+                                                <strong>{{varValorAtrasadoTotal | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-receber" role="progressbar" style="width: 100%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!--(Chart) Grafico Venda-->    
+                                <div *ngIf="varTipoGrafico == 2 && isAcaoAcessoVenda == true">
+                                    <div class="card-body">
+                                        <canvas  baseChart 
+                                        [datasets]="barChartData"
+                                        [labels]="barChartLabels" 
+                                        [options]="barChartOptions" 
+                                        [legend]="barChartLegend" 
+                                        [chartType]="barChartType" 
+                                        (chartHover)="chartHovered($event)" 
+                                        (chartClick)="chartClicked($event)"
+                                        >
+                                        </canvas>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <div class="row text-center">
+                                        
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Vendas</div>
+                                                <strong>{{varValorVenda | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-juros" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Recebido</div>
+                                                <strong>{{varValorRecebido | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-capital" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Atrasado</div>
+                                                <strong>{{varValorVendaAtrasado | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-receber" role="progressbar" style="width: 100%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                  <!--(Chart) Grafico Despesa-->    
+                                  <div *ngIf="varTipoGrafico == 3 && isAcaoAcessoDespesa == true">
+                                    <div class="card-body">
+                                        <canvas  baseChart 
+                                        [datasets]="barChartData"
+                                        [labels]="barChartLabels" 
+                                        [options]="barChartOptions" 
+                                        [legend]="barChartLegend" 
+                                        [chartType]="barChartType" 
+                                        (chartHover)="chartHovered($event)" 
+                                        (chartClick)="chartClicked($event)"
+                                        >
+                                        </canvas>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <div class="row text-center">
+                                        
+                                            <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                                                <div class="text-muted">Despesas</div>
+                                                <strong>{{varValorDespesa | VALOR}}</strong>
+                                                <div class="progress progress-xs mt-2">
+                                                    <div class="progress-bar color-valor-receber" role="progressbar" style="width: 100%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!--Demais Empresas-->
+                    <div class="row" *ngIf="this.empresaId != 3 && this.empresaId != 8">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card text-white bg-success ">
+                                <div class="card-header">
+                                    <div class="row" style="height:87px;">
+                                        <div class="col col-xs-3">
+                                            <i class="fa fa-user fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumCliente}}</div>
+                                            <div class="d-block">Clientes</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-success  fa-cursor" on-click=" link('CLIENTE')">
+                                    <span class="float-left">Ver Detalhes </span>
+                                    <a class="float-right card-inverse">
+                                        <span ><i class="fa fa-arrow-circle-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card text-white bg-danger"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:87px;">
+                                        <div class="col col-xs-6">
+                                            
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumFuncionario}}</div>
+                                            <div class="d-block">Funcionários</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-danger fa-cursor"  on-click=" link('FUNCIONARIO')">
+                                    <span class="float-left">Ver Detalhes </span>
+                                    <a class="float-right card-inverse">
+                                        <span ><i class="fa fa-arrow-circle-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Empresa AMB CRED (RODRIGO)-->
+                    <div class="row" *ngIf="this.empresaId == 3 || this.empresaId == 8">
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-funcionario"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-1 text-right">
+                                            <div class="d-block huge">{{varNumFuncionario}}</div>
+                                            <div class="d-block">Funcionários</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-funcionario fa-cursor"  on-click=" link('FUNCIONARIO')">
+                                    <a class="float-right card-inverse">
+                                        <span ><i class="fa fa-arrow-circle-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+     
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-cliente ">
+                                <div class="card-header">
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fa fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumCliente}}</div>
+                                            <div class="d-block">Clientes</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-cliente  fa-cursor" on-click=" link('CLIENTE')">
+                                    <a class="float-right card-inverse">
+                                        <span ><i class="fa fa-arrow-circle-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-cliente-ativo"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumClientesativos}}</div>
+                                            <div class="d-block">Clientes Ativos</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-cliente-ativo fa-cursor">
+                                    <span class="float-left"></span>
+                                    <a class="float-right card-inverse">
+                                        <br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-cliente-inativo"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumClientesinativos}}</div>
+                                            <div class="d-block">Clientes Inativos</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-cliente-inativo fa-cursor">
+                                    <span class="float-left"></span>
+                                    <a class="float-right card-inverse">
+                                        <br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-cliente-inadimpletes"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumClientesinadimplentes}}</div>
+                                            <div class="d-block huge">Clientes<br>Inadimplentes</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-cliente-inadimpletes fa-cursor">
+                                    <span class="float-left"></span>
+                                    <a class="float-right card-inverse">
+                                        <br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-2 col-lg-4">
+                            <div class="card text-white bg-cliente-arquivados"  >
+                                <div class="card-header" >
+                                    <div class="row" style="height:50px;">
+                                        <div class="">
+                                            <i class="fas fa-users fa-3x"></i>
+                                        </div>
+                                        <div class="col col-xs-9 text-right">
+                                            <div class="d-block huge">{{varNumClientesarquivados}}</div>
+                                            <div class="d-block">Clientes<br>Arquivados</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-cliente-arquivados fa-cursor">
+                                    <span class="float-left"></span>
+                                    <a class="float-right card-inverse">
+                                        <br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--row-->
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-popup-alerta (retorno)="retornoAlerta($event)"></app-popup-alerta>
+
+

@@ -1,0 +1,158 @@
+<div class="animated fadeIn">
+
+    <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header fundo">
+                <i class="far fa-id-card"></i> <strong>Meus Dados</strong>
+            </div>
+            <div class="card-body" (keydown.enter)="salvar()">
+
+                <div class="row">
+                    <div class="col-sm-8 col-lg-10">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <small>Alterar</small>&nbsp;
+                                <strong>Dados</strong>
+                            </div>
+
+                            <div class="card-body">
+
+                                <alert type="warning" *ngIf="isCamposObr==true">
+                                    <strong>Atenção!</strong> Informe os campos obrigatório abaixo!
+                                </alert>
+                                
+                                <!--Alertas do back-end -->
+                                <p *ngFor="let alert of alertsBackEnd">
+                                    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+                                </p>
+                                
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="form-group"> 
+    
+                                        <label for="name">Empresa</label>
+                                        <input type="text" autocomplete="off" class="form-control" placeholder="Empresa"
+                                        name="varEmpresa" [(ngModel)]="varEmpresa"
+                                        [ngbTypeahead]="pesquisaEmpresa"  
+                                        [resultFormatter]="pesquisaEmpresaRes"
+                                        [inputFormatter]="pesquisaEmpresaRes"
+                                        (focus)="focusEmpresa$.next($event.target.value)"
+                                        [ngClass]="classVarEmpresa"
+                                        [disabled]="isCampoDisabledEmpresa"
+                                        >
+
+                                        <!--Valida campo-->
+                                        <div class="invalid-feedback"  *ngFor="let campo of campoobrigatorio" >
+                                            <div *ngIf="campo.campo == 'varPerfil' && campo.erro == true">
+                                                <div [innerHTML]="campo.mensagem"></div>
+                                            </div>
+                                        </div>
+    
+                                      </div>
+                                    </div>
+                                   
+                                  </div><!--/.row-->
+                                
+                                  <div class="row justify-content-md-center">
+
+                                    <div class="col-sm-6" >
+                                        <div class="group-gap">
+                                            <!-- Upload image -->
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+                                                </div>
+                                                <div *ngIf="!isUrlAvatar" class="avatar-preview">
+                                                    <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'"></div>
+                                                </div>
+                                                <img *ngIf="isUrlAvatar" class="avatar-preview" [src]="urlAvatar" on-click="visualizarFoto()"/>
+                                               
+                                            </div>
+                                            <br>Tamanho imagem padrão <strong> 640x640</strong>
+                                        </div>
+                                        <button class="btn btn-danger btn btn-block" (click)="fileInput.click()">Mudar Avatar</button>
+                                       
+                                    </div>
+
+                                  </div><!--/.row-->
+
+                                  <br>
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="name">Nome</label>
+                                            <input type="text" autocomplete="off" placeholder="Usuário"
+                                            [ngClass]="classVarNickName"
+                                            name="varNickName" [(ngModel)]="varNickName"
+                                            [disabled]="isCampoDisabled" >
+
+                                            <!--Valida campo-->
+                                            <div class="invalid-feedback"  *ngFor="let campo of campoobrigatorio" >
+                                                <div *ngIf="campo.campo == 'varNickName' && campo.erro == true">
+                                                    <div [innerHTML]="campo.mensagem"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div><!--/.row-->
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="name">Email Acesso</label>
+                                            <input type="text" autocomplete="off" placeholder="Email acesso"
+                                            [ngClass]="classVarUsername"
+                                            name="varUsername" [(ngModel)]="varUsername"
+                                            [disabled]="isCampoDisabled" >
+
+                                            <!--Valida campo-->
+                                            <div class="invalid-feedback"  *ngFor="let campo of campoobrigatorio" >
+                                                <div *ngIf="campo.campo == 'varUsername' && campo.erro == true">
+                                                    <div [innerHTML]="campo.mensagem"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div><!--/.row-->
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="name">Senha</label>
+                                            <input type="password" placeholder="Senha"
+                                            [ngClass]="classVarPassword"
+                                            name="varPassword" [(ngModel)]="varPassword"
+                                            [disabled]="isCampoDisabled" >
+
+                                            <!--Valida campo-->
+                                            <div class="invalid-feedback"  *ngFor="let campo of campoobrigatorio" >
+                                                <div *ngIf="campo.campo == 'varPassword' && campo.erro == true">
+                                                    <div [innerHTML]="campo.mensagem"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div><!--/.row-->
+
+                            </div>
+                        </div>
+                    </div><!--/.col-->
+                    
+                </div><!--/.row-->
+
+                <button *ngIf="isCampoDisabled == false" class="btn btn-github btn-brand" style="margin-bottom: 4px" on-click="salvar()"> 
+                    <i class="far fa-save"></i><span>Salvar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div><!--/.row-->
+</div>
+
+
+
+
+<app-popup-alerta (retorno)="retornoPopUp()"></app-popup-alerta>

@@ -1,0 +1,241 @@
+<div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="largeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" on-click="voltar()">Sim</button>
+        <button type="button" class="btn btn-secondary" on-click="largeModal.hide()">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #smallModalRelEmprestimo="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="icon-printer icons mt-4 fa-Impressora"></i>  {{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="smallModalRelEmprestimo.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" on-click="voltarRelatorio('S')">Simplificado</button>
+        <button type="button" class="btn btn-success" on-click="voltarRelatorio('D')">Detalhado</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #smallModalFoto="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-camera icon-camera-blue"></i>  {{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="smallModalFoto.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body-foto">
+        <img class="foto-preview" [src]="urlFoto" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" on-click="smallModalFoto.hide()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="primaryModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" on-click="voltar()">Sim</button>
+        <button type="button" class="btn btn-secondary" on-click="primaryModal.hide()">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+[config]="{ keyboard: false, backdrop: true, ignoreBackdropClick: true}"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click=" voltar()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" on-click="voltar()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #successModalAviso="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+>
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="successModalAviso.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" on-click="voltar()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #warningModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="warningModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-warning" on-click="voltar()">Sim</button>-->
+        <button type="button" class="btn btn-secondary" on-click="voltar()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}</p>
+      </div>
+      <div class="modal-footer" *ngIf="mode !== 'ERRO-CADASTRO'">
+        <button type="button" class="btn btn-danger" on-click="voltar()">Sim</button>
+        <button type="button" class="btn btn-secondary" on-click="dangerModal.hide()">Não</button>
+      </div>
+      <div class="modal-footer" *ngIf="mode === 'ERRO-CADASTRO'">
+        <button type="button" class="btn btn-secondary" on-click="dangerModal.hide()">Voltar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModalAviso="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="dangerModalAviso.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" on-click="dangerModalAviso.hide()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" on-click="voltar()">Sim</button>
+        <button type="button" class="btn btn-secondary" on-click="infoModal.hide()">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModalAvisoAlerta="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="dangerModalAvisoAlerta.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" on-click="voltar()">Sim</button>
+        <button type="button" class="btn btn-secondary" on-click="dangerModalAvisoAlerta.hide()">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #dangerModalAlertaGrafico="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="dangerModalAviso.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{this.conteudoModal}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" on-click="voltar()">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

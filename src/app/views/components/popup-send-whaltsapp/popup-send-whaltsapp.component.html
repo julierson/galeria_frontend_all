@@ -1,0 +1,55 @@
+<div bsModal #modalSendWhaltSapp="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title"><i class="fab fa-whatsapp"></i> {{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="fechar()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+      
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <label for="ccnumber">Celular</label>
+                  <input type="text" autocomplete="off" class="form-control" placeholder="Celular" name="varTelefoneMovel" 
+                  [(ngModel)]="varTelefoneMovel"
+                  [mask]="getTelefonejMask('varTelefoneMovel')"
+                  [ngClass]="classVarTelefoneMovel" 
+                  >
+                  <small class="text-muted">ex. (99) 9 9999-9999</small>
+                   <!--Valida campo-->
+                   <div class="invalid-feedback"  *ngFor="let campo of campoobrigatorio" >
+                    <div *ngIf="campo.campo == 'varTelefoneMovel' && campo.erro == true">
+                        <div [innerHTML]="campo.mensagem"></div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="form-group">
+                  <label for="ccnumber">Mensagem</label>
+                  <textarea type="text" autocomplete="off" rows="5" class="form-control" placeholder="Mensagem" name="varMensagem" 
+                  [(ngModel)]="varMensagem"
+                  [ngClass]="'form-control'"
+                  ></textarea>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-github btn-brand" style="margin-bottom: 4px" on-click="enviar()"> 
+          <i class="far fa-paper-plane"></i><span>Enviar</span>
+        </button>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

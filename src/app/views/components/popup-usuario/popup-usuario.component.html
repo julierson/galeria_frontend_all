@@ -1,0 +1,42 @@
+<div bsModal #modalUsuario="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title"> <i class="fas fa-building"></i> {{this.tituloModal}}</h4>
+        <button type="button" class="close" on-click="fechar()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+       
+        <h6>Usuários</h6>
+        <hr>
+        <p *ngFor="let alert of alertsBackEnd">
+          <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+      </p>
+
+      
+        <div class="form-group row">
+          
+          <div class="col-md-9 col-form-label" *ngFor="let item of listaDados; let i = index">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radios" [id]="item.id" [value]="item.id" on-change="getSessao(item)">
+              <label class="form-check-label" [for]="item.id">{{item.nickname}} - {{item.username}}</label>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-acessar btn-brand" style="margin-bottom: 4px" on-click="reload()" [disabled]="btnDisabled"> 
+          <i class="fas fa-id-badge"></i><span>Iniciar Sessão</span>
+        </button>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

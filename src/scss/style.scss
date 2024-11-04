@@ -1,0 +1,25 @@
+// Se você deseja sobrescrever as variáveis, faça-o aqui
+@import "variables";
+
+// Importar estilos com layout padrão.
+// Se você vai usar o layout escuro, por favor, comente a próxima linha
+// @import "~@coreui/coreui-pro/scss/coreui";
+
+// Importar estilos com layout escuro
+// Se você quiser usar o layout escuro, descomente a próxima linha
+//@import "~@coreui/coreui-pro/scss/themes/dark/coreui-dark";
+
+@import "../style/coreui-pro";
+@import "./src/scss/vendors/ng-select/ng-select.scss";
+
+@import "../style/font-awesome-free/css/all.css";
+
+// Se você quiser adicionar algo faça aqui
+@import "custom";
+
+// Spinkit
+$spinkit-spinner-color: $body-color;
+@import '~spinkit/scss/spinkit.scss';
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+

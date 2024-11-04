@@ -1,0 +1,109 @@
+<script> $("div.navbar-fixed-top").autoHidingNavbar(); </script>
+
+<app-header
+  [navbarBrandRouterLink]="['/home']"
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/LogoProFinancas.png', width: 140, height: 35, alt: ''}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/ProFinancas-Icon.png', width: 50, height: 50, alt: 'Pro-Finanças'}"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]=false
+  [mobileAsideMenuToggler] = false
+  [class] = "'div.navbar-fixed-top'"
+  >
+
+  <ul class="nav navbar-nav" *ngIf="varUsuarioMaster!=true">
+    <li class="far d-none d-md-block d-ms-block d-lg-block nav-link" placement="bottom right">
+      EMPRESA > {{varNomeEmpresa}}
+    </li>
+  </ul>
+
+  <!--Lista das Empresas-->
+  <ul class="nav navbar-nav" *ngIf="varUsuarioMaster==true && listaEmpresa.length > 0">
+      <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle on-click="false">
+        <i class="far fa-building fa-2emp"></i>  
+      </a>
+      
+      <div class="dropdown-menu dropdown-menu-empresa-ds" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>EMPRESAS</strong></div>
+          
+        <div *ngFor="let empresa of listaEmpresa">
+            <a class="dropdown-item fa-setaEmpresa" on-click="setaEmpresa(empresa)" > 
+              <i class="far fa-building fa-empresas"></i>
+              {{empresa.id}} - {{empresa.nome}}
+            </a>
+        </div>
+
+      </div>
+    </li>
+    <li class="far d-none d-md-block d-ms-block d-lg-block nav-link" placement="bottom right">
+      {{varEmpresa}}
+    </li>
+  </ul>
+
+  <ul class="nav navbar-nav ml-auto">
+
+    <!--Nome do Usuario Logado-->
+    <li class="nav-item d-md-down-none">
+      <span class="badge badge-danger">{{varCumprimento}}{{varUserName}}</span>
+    </li>
+
+    <!--Painel do Usuario-->
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle on-click="false">
+        <img [src]="varUrlAvatar" class="img-avatar"/>
+      </a>
+     
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Minha Conta</strong></div>
+        <a class="dropdown-item  fa-meusdados" on-click=" link('ALTERARSENHA')"><i class="far fa-id-card fa-meusdados"></i> Meus Dados</a>
+        <a class="dropdown-item  fa-meusdados" on-click=" link('LISTAEMPRESA')" *ngIf="varUsuarioMaster!=true && varNumEmpresa > 1">
+          <i class="fas fa-home fa-empresas2"></i> Alterna Empresa
+        </a>
+        <a class="dropdown-item  fa-sair" on-click=" link('SAIR')"><i class="fa fa-lock fa-sair" ></i> Sair</a>
+
+      </div>
+    </li>
+
+  </ul>
+
+</app-header>
+
+<div class="app-body">
+
+  <app-menu></app-menu>
+
+  <!-- Main content -->
+  <main class="main">
+    <div *ngIf="diasAVencer >= 1 && diasAVencer <= 5 && valorMensalidade > 0">
+      <alert type="warning">
+        <strong>Atenção!</strong> Sua mensalidade no valor (<strong>{{valorMensalidade | VALOR}}</strong>) falta {{diasAVencer}} dias para vencer.
+        Não havendo regularização do pagamento até data prevista seu acesso será cortado.
+      </alert>
+    </div>
+
+    <div *ngIf="diasAVencer <= 0 && valorMensalidade > 0">
+      <alert type="danger">
+        <strong>Atenção!</strong> Sua mensalidade no valor (<strong>{{valorMensalidade | VALOR}}</strong>) se encontra vencida! 
+        Seu acesso será cortado a qualquer momento não havendo regularização do pagamento.
+      </alert>
+    </div>
+  
+    <div class="container-fluid-ds">
+      <div *ngIf="routeLoading" class="loading">Aguarde...</div>
+      <mat-progress-bar mode="indeterminate" *ngIf="routeLoading"></mat-progress-bar>
+
+      <router-outlet *ngIf="!routeLoading"></router-outlet>
+    </div>
+  </main>
+</div>
+
+<app-footer>
+  <span>&copy;Pro Finanças 2021</span>
+  <span class="ml-auto">Desenvolvimento Sistemas Pro</span>
+</app-footer>
+
+<!--Responsável para realizar o bloqueio das telas quando houver um processamento-->
+<block-ui></block-ui>
+
+<app-popup-usuario></app-popup-usuario>
